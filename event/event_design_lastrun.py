@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Thu 25 Jan 2018 05:07:10 PM CST
+    on Mon 29 Jan 2018 12:52:00 PM CST
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, hardware
+from psychopy import locale_setup, sound, gui, visual, core, data, event, logging
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -26,8 +26,8 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = 'event_design'  # from the Builder filename that created this script
-expInfo = {'participant':'', 'session':'001'}
+expName = u'event_design'  # from the Builder filename that created this script
+expInfo = {u'session': u'001', u'participant': u''}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False:
     core.quit()  # user pressed cancel
@@ -40,7 +40,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath=u'/home/james/event_design.psyexp',
+    originPath=u'/media/Data/Documents/devel/PsychoPyExamples/event/event_design.psyexp',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -55,7 +55,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=(1366, 768), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor=u'testMonitor', color=[-1.000,-1.000,-1.000], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
@@ -63,6 +63,24 @@ if expInfo['frameRate'] != None:
     frameDur = 1.0 / round(expInfo['frameRate'])
 else:
     frameDur = 1.0 / 60.0  # could not measure, so guess
+
+# Initialize components for Routine "welcome"
+welcomeClock = core.Clock()
+text = visual.TextStim(win=win, name='text',
+    text=u'Welcome to the experiment!\n\nHere you will press with your\nleft index finger everytime you\nsee a square',
+    font=u'Arial',
+    pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=0.0);
+
+# Initialize components for Routine "scantrigger"
+scantriggerClock = core.Clock()
+scan_trigger_text = visual.TextStim(win=win, name='scan_trigger_text',
+    text=u'Waiting for scan trigger...',
+    font=u'Arial',
+    pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
+    color=u'white', colorSpace='rgb', opacity=1,
+    depth=-1.0);
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
@@ -78,6 +96,140 @@ inter_trial_interval = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'],
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
 routineTimer = core.CountdownTimer()  # to track time remaining of each (non-slip) routine 
+
+# ------Prepare to start Routine "welcome"-------
+t = 0
+welcomeClock.reset()  # clock
+frameN = -1
+continueRoutine = True
+routineTimer.add(1.000000)
+# update component parameters for each repeat
+# keep track of which components have finished
+welcomeComponents = [text]
+for thisComponent in welcomeComponents:
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+
+# -------Start Routine "welcome"-------
+while continueRoutine and routineTimer.getTime() > 0:
+    # get current time
+    t = welcomeClock.getTime()
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    # *text* updates
+    if t >= 0.0 and text.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        text.tStart = t
+        text.frameNStart = frameN  # exact frame index
+        text.setAutoDraw(True)
+    frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+    if text.status == STARTED and t >= frameRemains:
+        text.setAutoDraw(False)
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in welcomeComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # check for quit (the Esc key)
+    if endExpNow or event.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+# -------Ending Routine "welcome"-------
+for thisComponent in welcomeComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+
+# ------Prepare to start Routine "scantrigger"-------
+t = 0
+scantriggerClock.reset()  # clock
+frameN = -1
+continueRoutine = True
+# update component parameters for each repeat
+scan_trigger = event.BuilderKeyResponse()
+# keep track of which components have finished
+scantriggerComponents = [scan_trigger, scan_trigger_text]
+for thisComponent in scantriggerComponents:
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+
+# -------Start Routine "scantrigger"-------
+while continueRoutine:
+    # get current time
+    t = scantriggerClock.getTime()
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    # *scan_trigger* updates
+    if t >= 0.0 and scan_trigger.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        scan_trigger.tStart = t
+        scan_trigger.frameNStart = frameN  # exact frame index
+        scan_trigger.status = STARTED
+        # keyboard checking is just starting
+        win.callOnFlip(scan_trigger.clock.reset)  # t=0 on next screen flip
+        event.clearEvents(eventType='keyboard')
+    if scan_trigger.status == STARTED:
+        theseKeys = event.getKeys(keyList=['y', '^'])
+        
+        # check for quit:
+        if "escape" in theseKeys:
+            endExpNow = True
+        if len(theseKeys) > 0:  # at least one key was pressed
+            scan_trigger.keys = theseKeys[-1]  # just the last key pressed
+            scan_trigger.rt = scan_trigger.clock.getTime()
+            # a response ends the routine
+            continueRoutine = False
+    
+    # *scan_trigger_text* updates
+    if t >= 0.0 and scan_trigger_text.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        scan_trigger_text.tStart = t
+        scan_trigger_text.frameNStart = frameN  # exact frame index
+        scan_trigger_text.setAutoDraw(True)
+    frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+    if scan_trigger_text.status == STARTED and t >= frameRemains:
+        scan_trigger_text.setAutoDraw(False)
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in scantriggerComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # check for quit (the Esc key)
+    if endExpNow or event.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+# -------Ending Routine "scantrigger"-------
+for thisComponent in scantriggerComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+# check responses
+if scan_trigger.keys in ['', [], None]:  # No response was made
+    scan_trigger.keys=None
+thisExp.addData('scan_trigger.keys',scan_trigger.keys)
+if scan_trigger.keys != None:  # we had a response
+    thisExp.addData('scan_trigger.rt', scan_trigger.rt)
+thisExp.nextEntry()
+# the Routine "scantrigger" was not non-slip safe, so reset the non-slip timer
+routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
 trials = data.TrialHandler(nReps=2, method='random', 
