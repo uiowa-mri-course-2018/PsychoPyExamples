@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Mon 29 Jan 2018 12:52:00 PM CST
+    on Tue 30 Jan 2018 08:21:44 AM CST
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -26,7 +26,7 @@ _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemen
 os.chdir(_thisDir)
 
 # Store info about the experiment session
-expName = u'event_design'  # from the Builder filename that created this script
+expName = 'event_design'  # from the Builder filename that created this script
 expInfo = {u'session': u'001', u'participant': u''}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False:
@@ -55,7 +55,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=(1366, 768), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor=u'testMonitor', color=[-1.000,-1.000,-1.000], colorSpace='rgb',
+    monitor='testMonitor', color=[-1.000,-1.000,-1.000], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
@@ -67,10 +67,10 @@ else:
 # Initialize components for Routine "welcome"
 welcomeClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
-    text=u'Welcome to the experiment!\n\nHere you will press with your\nleft index finger everytime you\nsee a square',
-    font=u'Arial',
+    text='Welcome to the experiment!\n\nHere you will press with your\nleft index finger everytime you\nsee a square',
+    font='Arial',
     pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "scantrigger"
@@ -179,14 +179,19 @@ while continueRoutine:
         win.callOnFlip(scan_trigger.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if scan_trigger.status == STARTED:
-        theseKeys = event.getKeys(keyList=['y', '^'])
+        theseKeys = event.getKeys(keyList=['asciicircum'])
         
         # check for quit:
         if "escape" in theseKeys:
             endExpNow = True
         if len(theseKeys) > 0:  # at least one key was pressed
-            scan_trigger.keys = theseKeys[-1]  # just the last key pressed
-            scan_trigger.rt = scan_trigger.clock.getTime()
+            scan_trigger.keys.extend(theseKeys)  # storing all keys
+            scan_trigger.rt.append(scan_trigger.clock.getTime())
+            # was this 'correct'?
+            if (scan_trigger.keys == str(u"'asciicircum'")) or (scan_trigger.keys == u"'asciicircum'"):
+                scan_trigger.corr = 1
+            else:
+                scan_trigger.corr = 0
             # a response ends the routine
             continueRoutine = False
     
@@ -196,9 +201,6 @@ while continueRoutine:
         scan_trigger_text.tStart = t
         scan_trigger_text.frameNStart = frameN  # exact frame index
         scan_trigger_text.setAutoDraw(True)
-    frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
-    if scan_trigger_text.status == STARTED and t >= frameRemains:
-        scan_trigger_text.setAutoDraw(False)
     
     # check if all components have finished
     if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -224,7 +226,14 @@ for thisComponent in scantriggerComponents:
 # check responses
 if scan_trigger.keys in ['', [], None]:  # No response was made
     scan_trigger.keys=None
+    # was no response the correct answer?!
+    if str(u"'asciicircum'").lower() == 'none':
+       scan_trigger.corr = 1  # correct non-response
+    else:
+       scan_trigger.corr = 0  # failed to respond (incorrectly)
+# store data for thisExp (ExperimentHandler)
 thisExp.addData('scan_trigger.keys',scan_trigger.keys)
+thisExp.addData('scan_trigger.corr', scan_trigger.corr)
 if scan_trigger.keys != None:  # we had a response
     thisExp.addData('scan_trigger.rt', scan_trigger.rt)
 thisExp.nextEntry()
