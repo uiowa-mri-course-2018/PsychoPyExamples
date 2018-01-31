@@ -14,6 +14,7 @@ trial_len,stim,ans
 2,red,2
 2,red,2
 2,blue,3
+30,NULL,
 2,red,2
 2,blue,3
 2,blue,3
@@ -45,6 +46,7 @@ trial_len,stim,ans
 2,blue,3
 2,blue,3
 2,blue,3
+30,NULL,
 2,red,2
 2,blue,3
 2,red,2
