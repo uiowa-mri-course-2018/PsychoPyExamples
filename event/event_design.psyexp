@@ -27,6 +27,28 @@
     <Param name="Screen" updates="None" val="1" valType="num"/>
   </Settings>
   <Routines>
+    <Routine name="welcome">
+      <TextComponent name="text">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="text" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="constant" val="Welcome to the experiment!&amp;#10;&amp;#10;Here you will press with your&amp;#10;right index finger everytime you&amp;#10;see a red square and your right middle &amp;#10;finger every time you see a blue square" valType="str"/>
+        <Param name="stopVal" updates="constant" val="10" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.1" valType="code"/>
+      </TextComponent>
+    </Routine>
     <Routine name="trial">
       <PolygonComponent name="square">
         <Param name="opacity" updates="constant" val="1" valType="code"/>
@@ -87,14 +109,14 @@
         <Param name="size" updates="constant" val="(0.5, 0.5)" valType="code"/>
       </PolygonComponent>
     </Routine>
-    <Routine name="welcome">
-      <TextComponent name="text">
+    <Routine name="exit">
+      <TextComponent name="done">
         <Param name="opacity" updates="constant" val="1" valType="code"/>
         <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
-        <Param name="name" updates="None" val="text" valType="code"/>
+        <Param name="name" updates="None" val="done" valType="code"/>
         <Param name="wrapWidth" updates="constant" val="" valType="code"/>
         <Param name="color" updates="constant" val="white" valType="str"/>
-        <Param name="text" updates="constant" val="Welcome to the experiment!&amp;#10;&amp;#10;Here you will press with your&amp;#10;left index finger everytime you&amp;#10;see a square" valType="str"/>
+        <Param name="text" updates="constant" val="Thank you for participating!" valType="str"/>
         <Param name="stopVal" updates="constant" val="1.0" valType="code"/>
         <Param name="durationEstim" updates="None" val="" valType="code"/>
         <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
@@ -199,5 +221,6 @@
     <Routine name="pretrial"/>
     <Routine name="trial"/>
     <LoopTerminator name="trials"/>
+    <Routine name="exit"/>
   </Flow>
 </PsychoPy2experiment>
