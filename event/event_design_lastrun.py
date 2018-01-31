@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.85.3),
-    on Tue 30 Jan 2018 08:21:44 AM CST
+    on Tue 30 Jan 2018 11:50:51 PM CST
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -76,11 +76,25 @@ text = visual.TextStim(win=win, name='text',
 # Initialize components for Routine "scantrigger"
 scantriggerClock = core.Clock()
 scan_trigger_text = visual.TextStim(win=win, name='scan_trigger_text',
-    text=u'Waiting for scan trigger...',
-    font=u'Arial',
+    text='Waiting for scan trigger...',
+    font='Arial',
     pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
-    color=u'white', colorSpace='rgb', opacity=1,
+    color='white', colorSpace='rgb', opacity=1,
     depth=-1.0);
+
+# Initialize components for Routine "scannerwarmup"
+scannerwarmupClock = core.Clock()
+warmup_square = visual.Rect(
+    win=win, name='warmup_square',
+    width=(0.5, 0.5)[0], height=(0.5, 0.5)[1],
+    ori=0, pos=(0, 0),
+    lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
+    fillColor=[1,1,1], fillColorSpace='rgb',
+    opacity=1, depth=0.0, interpolate=True)
+
+# Initialize components for Routine "pretrial"
+pretrialClock = core.Clock()
+
 
 # Initialize components for Routine "trial"
 trialClock = core.Clock()
@@ -88,10 +102,16 @@ square = visual.Rect(
     win=win, name='square',
     width=(0.5, 0.5)[0], height=(0.5, 0.5)[1],
     ori=0, pos=(0, 0),
+    lineWidth=1, lineColor=1.0, lineColorSpace='rgb',
+    fillColor=1.0, fillColorSpace='rgb',
+    opacity=1, depth=0.0, interpolate=True)
+iti_square = visual.Rect(
+    win=win, name='iti_square',
+    width=(0.5, 0.5)[0], height=(0.5, 0.5)[1],
+    ori=0, pos=(0, 0),
     lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
     fillColor=[1,1,1], fillColorSpace='rgb',
-    opacity=1, depth=0.0, interpolate=True)
-inter_trial_interval = core.StaticPeriod(win=win, screenHz=expInfo['frameRate'], name='inter_trial_interval')
+    opacity=1, depth=-2.0, interpolate=True)
 
 # Create some handy timers
 globalClock = core.Clock()  # to track the time since experiment started
@@ -176,7 +196,6 @@ while continueRoutine:
         scan_trigger.frameNStart = frameN  # exact frame index
         scan_trigger.status = STARTED
         # keyboard checking is just starting
-        win.callOnFlip(scan_trigger.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if scan_trigger.status == STARTED:
         theseKeys = event.getKeys(keyList=['asciicircum'])
@@ -185,13 +204,6 @@ while continueRoutine:
         if "escape" in theseKeys:
             endExpNow = True
         if len(theseKeys) > 0:  # at least one key was pressed
-            scan_trigger.keys.extend(theseKeys)  # storing all keys
-            scan_trigger.rt.append(scan_trigger.clock.getTime())
-            # was this 'correct'?
-            if (scan_trigger.keys == str(u"'asciicircum'")) or (scan_trigger.keys == u"'asciicircum'"):
-                scan_trigger.corr = 1
-            else:
-                scan_trigger.corr = 0
             # a response ends the routine
             continueRoutine = False
     
@@ -223,27 +235,65 @@ while continueRoutine:
 for thisComponent in scantriggerComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
-# check responses
-if scan_trigger.keys in ['', [], None]:  # No response was made
-    scan_trigger.keys=None
-    # was no response the correct answer?!
-    if str(u"'asciicircum'").lower() == 'none':
-       scan_trigger.corr = 1  # correct non-response
-    else:
-       scan_trigger.corr = 0  # failed to respond (incorrectly)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('scan_trigger.keys',scan_trigger.keys)
-thisExp.addData('scan_trigger.corr', scan_trigger.corr)
-if scan_trigger.keys != None:  # we had a response
-    thisExp.addData('scan_trigger.rt', scan_trigger.rt)
-thisExp.nextEntry()
 # the Routine "scantrigger" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
+# ------Prepare to start Routine "scannerwarmup"-------
+t = 0
+scannerwarmupClock.reset()  # clock
+frameN = -1
+continueRoutine = True
+routineTimer.add(6.000000)
+# update component parameters for each repeat
+# keep track of which components have finished
+scannerwarmupComponents = [warmup_square]
+for thisComponent in scannerwarmupComponents:
+    if hasattr(thisComponent, 'status'):
+        thisComponent.status = NOT_STARTED
+
+# -------Start Routine "scannerwarmup"-------
+while continueRoutine and routineTimer.getTime() > 0:
+    # get current time
+    t = scannerwarmupClock.getTime()
+    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+    # update/draw components on each frame
+    
+    # *warmup_square* updates
+    if t >= 0.0 and warmup_square.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        warmup_square.tStart = t
+        warmup_square.frameNStart = frameN  # exact frame index
+        warmup_square.setAutoDraw(True)
+    frameRemains = 0.0 + 6.0- win.monitorFramePeriod * 0.75  # most of one frame period left
+    if warmup_square.status == STARTED and t >= frameRemains:
+        warmup_square.setAutoDraw(False)
+    
+    # check if all components have finished
+    if not continueRoutine:  # a component has requested a forced-end of Routine
+        break
+    continueRoutine = False  # will revert to True if at least one component still running
+    for thisComponent in scannerwarmupComponents:
+        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+            continueRoutine = True
+            break  # at least one component has not yet finished
+    
+    # check for quit (the Esc key)
+    if endExpNow or event.getKeys(keyList=["escape"]):
+        core.quit()
+    
+    # refresh the screen
+    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+        win.flip()
+
+# -------Ending Routine "scannerwarmup"-------
+for thisComponent in scannerwarmupComponents:
+    if hasattr(thisComponent, "setAutoDraw"):
+        thisComponent.setAutoDraw(False)
+
 # set up handler to look after randomisation of conditions etc
-trials = data.TrialHandler(nReps=2, method='random', 
+trials = data.TrialHandler(nReps=1, method='sequential', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('event_rt.csv'),
+    trialList=data.importConditions(u'event_rt.csv'),
     seed=1, name='trials')
 thisExp.addLoop(trials)  # add the loop to the experiment
 thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -259,15 +309,64 @@ for thisTrial in trials:
         for paramName in thisTrial.keys():
             exec(paramName + '= thisTrial.' + paramName)
     
+    # ------Prepare to start Routine "pretrial"-------
+    t = 0
+    pretrialClock.reset()  # clock
+    frameN = -1
+    continueRoutine = True
+    # update component parameters for each repeat
+    if stim is None or stim == "NULL":
+        stim = 'white'
+    # keep track of which components have finished
+    pretrialComponents = []
+    for thisComponent in pretrialComponents:
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    
+    # -------Start Routine "pretrial"-------
+    while continueRoutine:
+        # get current time
+        t = pretrialClock.getTime()
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in pretrialComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # check for quit (the Esc key)
+        if endExpNow or event.getKeys(keyList=["escape"]):
+            core.quit()
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # -------Ending Routine "pretrial"-------
+    for thisComponent in pretrialComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    
+    # the Routine "pretrial" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    
     # ------Prepare to start Routine "trial"-------
     t = 0
     trialClock.reset()  # clock
     frameN = -1
     continueRoutine = True
     # update component parameters for each repeat
+    square.setFillColor(stim)
+    square.setLineColor(stim)
     keyboard = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trialComponents = [square, inter_trial_interval, keyboard]
+    trialComponents = [square, keyboard, iti_square]
     for thisComponent in trialComponents:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -302,22 +401,30 @@ for thisTrial in trials:
         if keyboard.status == STARTED and t >= frameRemains:
             keyboard.status = STOPPED
         if keyboard.status == STARTED:
-            theseKeys = event.getKeys(keyList=['space'])
+            theseKeys = event.getKeys(keyList=['2', '3'])
             
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
             if len(theseKeys) > 0:  # at least one key was pressed
-                keyboard.keys = theseKeys[-1]  # just the last key pressed
-                keyboard.rt = keyboard.clock.getTime()
-        # *inter_trial_interval* period
-        if t >= 1 and inter_trial_interval.status == NOT_STARTED:
+                if keyboard.keys == []:  # then this was the first keypress
+                    keyboard.keys = theseKeys[0]  # just the first key pressed
+                    keyboard.rt = keyboard.clock.getTime()
+                    # was this 'correct'?
+                    if (keyboard.keys == str(ans)) or (keyboard.keys == ans):
+                        keyboard.corr = 1
+                    else:
+                        keyboard.corr = 0
+        
+        # *iti_square* updates
+        if t >= 0.75 and iti_square.status == NOT_STARTED:
             # keep track of start time/frame for later
-            inter_trial_interval.tStart = t
-            inter_trial_interval.frameNStart = frameN  # exact frame index
-            inter_trial_interval.start(iti)
-        elif inter_trial_interval.status == STARTED:  # one frame should pass before updating params and completing
-            inter_trial_interval.complete()  # finish the static period
+            iti_square.tStart = t
+            iti_square.frameNStart = frameN  # exact frame index
+            iti_square.setAutoDraw(True)
+        frameRemains = 0.75 + trial_len - 0.75- win.monitorFramePeriod * 0.75  # most of one frame period left
+        if iti_square.status == STARTED and t >= frameRemains:
+            iti_square.setAutoDraw(False)
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -343,14 +450,22 @@ for thisTrial in trials:
     # check responses
     if keyboard.keys in ['', [], None]:  # No response was made
         keyboard.keys=None
+        # was no response the correct answer?!
+        if str(ans).lower() == 'none':
+           keyboard.corr = 1  # correct non-response
+        else:
+           keyboard.corr = 0  # failed to respond (incorrectly)
+    # store data for trials (TrialHandler)
     trials.addData('keyboard.keys',keyboard.keys)
+    trials.addData('keyboard.corr', keyboard.corr)
     if keyboard.keys != None:  # we had a response
         trials.addData('keyboard.rt', keyboard.rt)
     # the Routine "trial" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
     
-# completed 2 repeats of 'trials'
+# completed 1 repeats of 'trials'
+
 
 # these shouldn't be strictly necessary (should auto-save)
 thisExp.saveAsWideText(filename+'.csv')
